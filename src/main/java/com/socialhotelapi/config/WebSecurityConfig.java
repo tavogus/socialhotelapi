@@ -12,19 +12,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("gustavo")
-		.password("senha").roles("USER");
+		auth.inMemoryAuthentication().withUser("usuario").password("senha").roles("USER"); //forma menos segura de atenticação
 	}
 	
 	protected void configure(HttpSecurity http) throws Exception {
-		http.
-			authorizeRequests()
-			.antMatchers("/h2-console/**").permitAll()
-			.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-			.anyRequest().authenticated()
-			.and()
-				.httpBasic()
-			.and()
-				.csrf().disable();
+		http.authorizeRequests().antMatchers("/h2-console/**").permitAll()
+					.antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated()
+					.and().httpBasic()
+					.and()
+					.csrf().disable();
 	}
 }
